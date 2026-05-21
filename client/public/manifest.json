@@ -1,0 +1,18 @@
+{
+  "name": "Historica — India's Monuments",
+  "short_name": "Historica",
+  "description": "Explore India's historical monuments in 3D, AR and VR with time-travel views.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#1e1b2e",
+  "theme_color": "#d97706",
+  "orientation": "any",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+  ],
+  "screenshots": [
+    { "src": "/screenshot-wide.png", "sizes": "1280x720", "type": "image/png", "form_factor": "wide" }
+  ],
+  "categories": ["education", "travel", "entertainment"]
+}
