@@ -204,6 +204,18 @@ const en = {
     rotateHint: "Rotate, zoom, and pan each model to compare architectural changes over time.",
     viewInVR: "View in VR",
     viewInAR: "View in AR",
+    subtitle: "Pick any two monuments to compare side-by-side.",
+    left: "Left",
+    right: "Right",
+    state: "State",
+    era: "Era",
+    about: "About",
+    keyFacts: "Key Facts",
+    notableFeatures: "Notable Features",
+    showLess: "Show less",
+    moreFacts: "more facts",
+    free: "Free",
+    built: "Built",
   },
 };
 

@@ -2,6 +2,7 @@ import { Suspense, useState } from "react";
 import { useLocation } from "wouter";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment, Html } from "@react-three/drei";
+import { useTranslation } from "react-i18next";
 import { monuments } from "../data/monuments";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
@@ -48,9 +49,9 @@ const ScenePreview = ({ url }: { url: string }) => (
 );
 
 const MonumentPicker = ({
-  value, onChange, exclude, label,
+  value, onChange, exclude, label, isHindi,
 }: {
-  value: string; onChange: (id: string) => void; exclude?: string; label: string;
+  value: string; onChange: (id: string) => void; exclude?: string; label: string; isHindi: boolean;
 }) => (
   <div className="flex flex-col gap-1">
     <label className="text-xs font-semibold text-amber-800">{label}</label>
@@ -60,7 +61,9 @@ const MonumentPicker = ({
       className="bg-white border border-amber-200 rounded-md px-3 py-2 text-sm text-orange-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
     >
       {monuments.filter(m => m.id !== exclude).map(m => (
-        <option key={m.id} value={m.id}>{m.name} — {m.city}</option>
+        <option key={m.id} value={m.id}>
+          {(isHindi && m.nameHi) ? m.nameHi : m.name} — {m.city}
+        </option>
       ))}
     </select>
   </div>
@@ -72,36 +75,41 @@ const ERA_COLOR: Record<string, string> = {
   modern: "bg-blue-100 text-blue-800 border-blue-300",
 };
 
-const InfoRow = ({ icon, label, value }: { icon: React.ReactNode; label: string; value: string }) => (
-  <div className="flex items-start gap-2 py-2 border-b border-amber-50 last:border-0">
-    <span className="text-amber-500 mt-0.5 shrink-0">{icon}</span>
-    <div className="min-w-0">
-      <div className="text-[10px] font-semibold text-amber-600 uppercase tracking-wide">{label}</div>
-      <div className="text-xs text-orange-900 leading-snug">{value}</div>
-    </div>
-  </div>
-);
+const ERA_LABELS_HI: Record<string, string> = {
+  ancient: "प्राचीन",
+  medieval: "मध्यकालीन",
+  modern: "आधुनिक",
+};
 
-const Side = ({ id }: { id: string }) => {
+const Side = ({ id, isHindi }: { id: string; isHindi: boolean }) => {
+  const { t } = useTranslation();
   const m = monuments.find(x => x.id === id);
   const [showAllFacts, setShowAllFacts] = useState(false);
   if (!m) return null;
 
-  const visibleFacts = showAllFacts ? m.facts : m.facts.slice(0, 3);
+  const name = (isHindi && m.nameHi) ? m.nameHi : m.name;
+  const description = (isHindi && m.descriptionHi) ? m.descriptionHi : m.description;
+  const dynasty = (isHindi && m.dynastyHi) ? m.dynastyHi : m.dynasty;
+  const facts = (isHindi && m.factsHi && m.factsHi.length > 0) ? m.factsHi : m.facts;
+  const visitingHours = (isHindi && m.visitingHoursHi) ? m.visitingHoursHi : m.visitingHours;
+  const entryFee = (isHindi && m.entryFeeHi) ? m.entryFeeHi : (m.entryFee ?? t("compare.free"));
+  const eraLabel = m.era
+    ? (isHindi ? (ERA_LABELS_HI[m.era] ?? m.era) : m.era)
+    : null;
+
+  const visibleFacts = showAllFacts ? facts : facts.slice(0, 3);
 
   return (
     <Card className="border-amber-200 shadow-lg bg-white/95 backdrop-blur-md overflow-hidden flex flex-col h-full">
-      {/* 3D Model */}
       <div className="h-52 bg-gradient-to-br from-amber-100/60 to-orange-100/60 shrink-0">
         <ScenePreview url={m.primaryModel} />
       </div>
 
       <CardContent className="p-0 overflow-y-auto flex-1 flex flex-col">
-        {/* Header */}
         <div className="px-4 pt-3 pb-2 border-b border-amber-100">
           <div className="flex items-start justify-between gap-2">
             <div>
-              <h3 className="text-lg font-bold text-amber-900 leading-tight">{m.name}</h3>
+              <h3 className="text-lg font-bold text-amber-900 leading-tight">{name}</h3>
               <p className="text-xs text-orange-600 flex items-center gap-1 mt-0.5">
                 <MapPin className="h-3 w-3" /> {m.city}, {m.state}
               </p>
@@ -110,44 +118,44 @@ const Side = ({ id }: { id: string }) => {
               {m.UNESCO && (
                 <Badge className="bg-amber-500 text-white text-[10px] px-2 py-0">UNESCO</Badge>
               )}
-              {m.era && (
-                <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border capitalize ${ERA_COLOR[m.era] ?? ""}`}>
-                  {m.era}
+              {eraLabel && (
+                <span className={`text-[10px] font-semibold px-2 py-0.5 rounded-full border capitalize ${ERA_COLOR[m.era!] ?? ""}`}>
+                  {eraLabel}
                 </span>
               )}
             </div>
           </div>
         </div>
 
-        {/* Key Details Grid */}
         <div className="grid grid-cols-2 gap-px bg-amber-100 border-b border-amber-100">
           {[
-            { icon: <Calendar className="h-3.5 w-3.5" />, label: "Built", value: m.yearBuilt },
-            { icon: <Crown className="h-3.5 w-3.5" />, label: "Dynasty", value: m.dynasty },
-            { icon: <Clock className="h-3.5 w-3.5" />, label: "Visiting Hours", value: m.visitingHours },
-            { icon: <Ticket className="h-3.5 w-3.5" />, label: "Entry Fee", value: m.entryFee ?? "Free" },
+            { icon: <Calendar className="h-3.5 w-3.5" />, label: t("compare.built"), value: m.yearBuilt },
+            { icon: <Crown className="h-3.5 w-3.5" />, label: t("monument.dynasty"), value: dynasty },
+            { icon: <Clock className="h-3.5 w-3.5" />, label: t("monument.visitingHours"), value: visitingHours },
+            { icon: <Ticket className="h-3.5 w-3.5" />, label: t("monument.entryFee"), value: entryFee },
           ].map(({ icon, label, value }) => (
             <div key={label} className="bg-white px-3 py-2">
-              <div className="flex items-center gap-1 text-amber-500 mb-0.5">{icon}<span className="text-[10px] font-semibold text-amber-600 uppercase tracking-wide">{label}</span></div>
+              <div className="flex items-center gap-1 text-amber-500 mb-0.5">
+                {icon}
+                <span className="text-[10px] font-semibold text-amber-600 uppercase tracking-wide">{label}</span>
+              </div>
               <div className="text-xs text-orange-900 leading-snug">{value}</div>
             </div>
           ))}
         </div>
 
-        {/* Description */}
         <div className="px-4 py-3 border-b border-amber-100">
           <div className="flex items-center gap-1 text-amber-600 mb-1">
             <Globe className="h-3.5 w-3.5" />
-            <span className="text-[10px] font-semibold uppercase tracking-wide">About</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wide">{t("compare.about")}</span>
           </div>
-          <p className="text-xs text-orange-900 leading-relaxed">{m.description}</p>
+          <p className="text-xs text-orange-900 leading-relaxed">{description}</p>
         </div>
 
-        {/* Key Facts */}
         <div className="px-4 py-3 border-b border-amber-100">
           <div className="flex items-center gap-1 text-amber-600 mb-2">
             <Star className="h-3.5 w-3.5" />
-            <span className="text-[10px] font-semibold uppercase tracking-wide">Key Facts</span>
+            <span className="text-[10px] font-semibold uppercase tracking-wide">{t("compare.keyFacts")}</span>
           </div>
           <ul className="space-y-1.5">
             {visibleFacts.map((fact, i) => (
@@ -157,22 +165,23 @@ const Side = ({ id }: { id: string }) => {
               </li>
             ))}
           </ul>
-          {m.facts.length > 3 && (
+          {facts.length > 3 && (
             <button
               onClick={() => setShowAllFacts(v => !v)}
               className="mt-2 flex items-center gap-1 text-[11px] text-amber-600 hover:text-amber-800 font-medium"
             >
-              {showAllFacts ? <><ChevronUp className="h-3 w-3" /> Show less</> : <><ChevronDown className="h-3 w-3" /> {m.facts.length - 3} more facts</>}
+              {showAllFacts
+                ? <><ChevronUp className="h-3 w-3" /> {t("compare.showLess")}</>
+                : <><ChevronDown className="h-3 w-3" /> {facts.length - 3} {t("compare.moreFacts")}</>}
             </button>
           )}
         </div>
 
-        {/* Hotspots */}
         {m.hotspots && m.hotspots.length > 0 && (
           <div className="px-4 py-3">
             <div className="flex items-center gap-1 text-amber-600 mb-2">
               <Landmark className="h-3.5 w-3.5" />
-              <span className="text-[10px] font-semibold uppercase tracking-wide">Notable Features</span>
+              <span className="text-[10px] font-semibold uppercase tracking-wide">{t("compare.notableFeatures")}</span>
             </div>
             <div className="space-y-2">
               {m.hotspots.map((h, i) => (
@@ -190,56 +199,63 @@ const Side = ({ id }: { id: string }) => {
 };
 
 const ComparePage = () => {
+  const { t, i18n } = useTranslation();
   const [, setLocation] = useLocation();
   const [a, setA] = useState(monuments[0].id);
   const [b, setB] = useState(monuments[1].id);
   const mA = monuments.find(x => x.id === a);
   const mB = monuments.find(x => x.id === b);
+  const isHindi = i18n.language === "hi";
+
+  const mAName = (isHindi && mA?.nameHi) ? mA.nameHi : mA?.name;
+  const mBName = (isHindi && mB?.nameHi) ? mB.nameHi : mB?.name;
+
+  const eraA = mA?.era ? (isHindi ? (ERA_LABELS_HI[mA.era] ?? mA.era) : mA.era) : "—";
+  const eraB = mB?.era ? (isHindi ? (ERA_LABELS_HI[mB.era] ?? mB.era) : mB.era) : "—";
 
   return (
     <div className="w-full h-full flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-4">
       <div className="flex flex-wrap items-end justify-between gap-3 mb-4">
         <div>
           <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-700 to-orange-700">
-            Compare Monuments
+            {t("nav.compare")}
           </h1>
-          <p className="text-sm text-orange-700">Pick any two monuments to compare side-by-side.</p>
+          <p className="text-sm text-orange-700">{t("compare.subtitle")}</p>
         </div>
         <div className="flex gap-3 items-end flex-wrap">
-          <MonumentPicker label="Left" value={a} onChange={setA} exclude={b} />
-          <MonumentPicker label="Right" value={b} onChange={setB} exclude={a} />
-          <Button variant="outline" onClick={() => setLocation("/")}>Back to Map</Button>
+          <MonumentPicker label={t("compare.left")} value={a} onChange={setA} exclude={b} isHindi={isHindi} />
+          <MonumentPicker label={t("compare.right")} value={b} onChange={setB} exclude={a} isHindi={isHindi} />
+          <Button variant="outline" onClick={() => setLocation("/")}>{t("monument.backToMap")}</Button>
         </div>
       </div>
 
-      {/* Quick comparison bar */}
       {mA && mB && (
         <div className="bg-white/80 border border-amber-200 rounded-lg px-4 py-2 mb-3 grid grid-cols-3 text-center text-xs gap-2">
-          <div className="font-semibold text-amber-800 truncate">{mA.name}</div>
+          <div className="font-semibold text-amber-800 truncate">{mAName}</div>
           <div className="text-amber-500 font-bold">VS</div>
-          <div className="font-semibold text-amber-800 truncate">{mB.name}</div>
+          <div className="font-semibold text-amber-800 truncate">{mBName}</div>
 
           <div className="text-orange-700">{mA.yearBuilt}</div>
-          <div className="text-amber-400 text-[10px] uppercase tracking-wide">Year Built</div>
+          <div className="text-amber-400 text-[10px] uppercase tracking-wide">{t("monument.yearBuilt")}</div>
           <div className="text-orange-700">{mB.yearBuilt}</div>
 
           <div className="text-orange-700">{mA.state}</div>
-          <div className="text-amber-400 text-[10px] uppercase tracking-wide">State</div>
+          <div className="text-amber-400 text-[10px] uppercase tracking-wide">{t("compare.state")}</div>
           <div className="text-orange-700">{mB.state}</div>
 
           <div className="text-orange-700">{mA.UNESCO ? "✅ Yes" : "❌ No"}</div>
           <div className="text-amber-400 text-[10px] uppercase tracking-wide">UNESCO</div>
           <div className="text-orange-700">{mB.UNESCO ? "✅ Yes" : "❌ No"}</div>
 
-          <div className="text-orange-700 capitalize">{mA.era ?? "—"}</div>
-          <div className="text-amber-400 text-[10px] uppercase tracking-wide">Era</div>
-          <div className="text-orange-700 capitalize">{mB.era ?? "—"}</div>
+          <div className="text-orange-700 capitalize">{eraA}</div>
+          <div className="text-amber-400 text-[10px] uppercase tracking-wide">{t("compare.era")}</div>
+          <div className="text-orange-700 capitalize">{eraB}</div>
         </div>
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 flex-1 min-h-0">
-        <Side id={a} />
-        <Side id={b} />
+        <Side id={a} isHindi={isHindi} />
+        <Side id={b} isHindi={isHindi} />
       </div>
     </div>
   );
