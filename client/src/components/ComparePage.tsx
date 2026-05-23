@@ -4,6 +4,7 @@ import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF, Environment, Html } from "@react-three/drei";
 import { useTranslation } from "react-i18next";
 import { monuments } from "../data/monuments";
+import { HOTSPOT_HI } from "../data/hotspotTranslationsHi";
 import { Button } from "./ui/button";
 import { Card, CardContent } from "./ui/card";
 import { Badge } from "./ui/badge";
@@ -184,12 +185,15 @@ const Side = ({ id, isHindi }: { id: string; isHindi: boolean }) => {
               <span className="text-[10px] font-semibold uppercase tracking-wide">{t("compare.notableFeatures")}</span>
             </div>
             <div className="space-y-2">
-              {m.hotspots.map((h, i) => (
-                <div key={i} className="bg-amber-50 border border-amber-100 rounded-md px-2.5 py-1.5">
-                  <div className="text-xs font-semibold text-amber-800">{h.name}</div>
-                  <div className="text-[11px] text-orange-700 leading-snug mt-0.5">{h.description}</div>
-                </div>
-              ))}
+              {m.hotspots.map((h, i) => {
+                const hiData = isHindi ? HOTSPOT_HI[h.name] : undefined;
+                return (
+                  <div key={i} className="bg-amber-50 border border-amber-100 rounded-md px-2.5 py-1.5">
+                    <div className="text-xs font-semibold text-amber-800">{hiData ? hiData.name : h.name}</div>
+                    <div className="text-[11px] text-orange-700 leading-snug mt-0.5">{hiData ? hiData.description : h.description}</div>
+                  </div>
+                );
+              })}
             </div>
           </div>
         )}
@@ -243,9 +247,9 @@ const ComparePage = () => {
           <div className="text-amber-400 text-[10px] uppercase tracking-wide">{t("compare.state")}</div>
           <div className="text-orange-700">{mB.state}</div>
 
-          <div className="text-orange-700">{mA.UNESCO ? "✅ Yes" : "❌ No"}</div>
+          <div className="text-orange-700">{mA.UNESCO ? `✅ ${t("compare.yes")}` : `❌ ${t("compare.no")}`}</div>
           <div className="text-amber-400 text-[10px] uppercase tracking-wide">UNESCO</div>
-          <div className="text-orange-700">{mB.UNESCO ? "✅ Yes" : "❌ No"}</div>
+          <div className="text-orange-700">{mB.UNESCO ? `✅ ${t("compare.yes")}` : `❌ ${t("compare.no")}`}</div>
 
           <div className="text-orange-700 capitalize">{eraA}</div>
           <div className="text-amber-400 text-[10px] uppercase tracking-wide">{t("compare.era")}</div>

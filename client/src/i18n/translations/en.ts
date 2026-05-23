@@ -216,6 +216,8 @@ const en = {
     moreFacts: "more facts",
     free: "Free",
     built: "Built",
+    yes: "Yes",
+    no: "No",
   },
 };
 
