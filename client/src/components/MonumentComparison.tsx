@@ -9,6 +9,7 @@ import { Button } from "./ui/button";
 import { ChevronLeft, Info, Clock, Home, Eye } from "lucide-react";
 import * as THREE from "three";
 import { GLTF } from "three-stdlib";
+import { useTranslation } from "react-i18next";
 
 const AVAILABLE_MODEL_PATHS = new Set([
   "/models/ajanta_ellora.glb",
@@ -213,6 +214,7 @@ const usePreloadModels = (monument: Monument | undefined) => {
 const MonumentComparison = () => {
   const params = useParams<{ id: string }>();
   const [, setLocation] = useLocation();
+  const { t } = useTranslation();
   const monument = monuments.find(m => m.id === params.id);
   const [showStats, setShowStats] = useState(false);
   
@@ -222,9 +224,9 @@ const MonumentComparison = () => {
   if (!monument) {
     return (
       <div className="flex flex-col items-center justify-center h-full">
-        <h2 className="text-2xl font-bold mb-4">Monument not found</h2>
+        <h2 className="text-2xl font-bold mb-4">{t("compare.notFound")}</h2>
         <Button onClick={() => setLocation("/")}>
-          <Home className="mr-2 h-4 w-4" /> Return to Map
+          <Home className="mr-2 h-4 w-4" /> {t("compare.returnToMap")}
         </Button>
       </div>
     );
@@ -236,7 +238,7 @@ const MonumentComparison = () => {
       <div className="bg-white/90 backdrop-blur-md shadow-sm border-b p-4 flex justify-between items-center">
         <div className="flex items-center space-x-4">
           <Button variant="outline" size="sm" onClick={() => setLocation(`/monument/${monument.id}`)}>
-            <ChevronLeft className="h-4 w-4 mr-1" /> Back
+            <ChevronLeft className="h-4 w-4 mr-1" /> {t("compare.back")}
           </Button>
           <div>
             <h1 className="text-xl font-bold">{monument.name}</h1>
@@ -244,7 +246,7 @@ const MonumentComparison = () => {
               <span>{monument.city}, {monument.state}</span>
               {monument.UNESCO && (
                 <Badge variant="outline" className="bg-amber-50 text-amber-700 border-amber-200 text-xs">
-                  UNESCO Heritage
+                  {t("compare.unescoHeritage")}
                 </Badge>
               )}
             </div>
@@ -258,7 +260,7 @@ const MonumentComparison = () => {
             onClick={() => setShowStats(!showStats)}
             className={showStats ? "bg-slate-100" : ""}
           >
-            <Info className="h-4 w-4 mr-1" /> {showStats ? "Hide Stats" : "Show Stats"}
+            <Info className="h-4 w-4 mr-1" /> {showStats ? t("compare.hideStats") : t("compare.showStats")}
           </Button>
         </div>
       </div>
@@ -267,7 +269,7 @@ const MonumentComparison = () => {
       <div className="bg-amber-50 py-2 px-4 border-b border-amber-200">
         <div className="flex items-center justify-center">
           <Clock className="h-4 w-4 mr-2 text-amber-700" />
-          <h2 className="text-amber-800 font-medium">Timeline Comparison View</h2>
+          <h2 className="text-amber-800 font-medium">{t("compare.timelineView")}</h2>
         </div>
       </div>
       
@@ -276,7 +278,7 @@ const MonumentComparison = () => {
         {/* Ancient model - left */}
         <div className="relative h-full border-r border-gray-200 overflow-auto">
           <div className="absolute top-0 left-0 right-0 bg-indigo-100 text-indigo-800 py-1 px-3 text-center z-10 font-medium">
-            Original Construction ({monument.yearBuilt})
+            {t("compare.originalConstruction")} ({monument.yearBuilt})
           </div>
           <Canvas shadows camera={{ position: [0, 2, 5], fov: 50 }}>
             {showStats && <Stats />}
@@ -307,7 +309,7 @@ const MonumentComparison = () => {
         {/* Past model - middle */}
         <div className="relative h-full border-r border-gray-200 overflow-auto">
           <div className="absolute top-0 left-0 right-0 bg-orange-100 text-orange-800 py-1 px-3 text-center z-10 font-medium">
-            ~100 Years Ago
+            {t("compare.hundredYearsAgo")}
           </div>
           <Canvas shadows camera={{ position: [0, 2, 5], fov: 50 }}>
             {showStats && <Stats />}
@@ -338,7 +340,7 @@ const MonumentComparison = () => {
         {/* Present model - right */}
         <div className="relative h-full overflow-auto">
           <div className="absolute top-0 left-0 right-0 bg-emerald-100 text-emerald-800 py-1 px-3 text-center z-10 font-medium">
-            Present Day
+            {t("compare.presentDay")}
           </div>
           <Canvas shadows camera={{ position: [0, 2, 5], fov: 50 }}>
             {showStats && <Stats />}
@@ -372,17 +374,17 @@ const MonumentComparison = () => {
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-1">
             <Eye className="h-4 w-4 text-gray-500" />
-            <span>Rotate, zoom, and pan each model to compare architectural changes over time.</span>
+            <span>{t("compare.rotateHint")}</span>
           </div>
           <div className="flex space-x-2">
             <Link href={`/monument/${monument.id}/vr`}>
               <Button size="sm" variant="outline" className="h-7 text-xs">
-                View in VR
+                {t("compare.viewInVR")}
               </Button>
             </Link>
             <Link href={`/monument/${monument.id}/ar`}>
               <Button size="sm" variant="outline" className="h-7 text-xs">
-                View in AR
+                {t("compare.viewInAR")}
               </Button>
             </Link>
           </div>

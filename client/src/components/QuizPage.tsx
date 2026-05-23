@@ -467,7 +467,7 @@ const QuizPage = () => {
           )}
 
           <div className="mt-4 flex justify-center">
-            <Button variant="outline" onClick={() => setLocation("/")}>Back to Map</Button>
+            <Button variant="outline" onClick={() => setLocation("/")}>{t("monument.backToMap")}</Button>
           </div>
         </div>
       </div>

@@ -89,6 +89,14 @@ const STAMP_ICONS: Record<string, string> = {
 
 const ALL_MONUMENT_IDS = Object.keys(MONUMENT_NAMES);
 
+const REGION_LABEL_KEYS: Record<string, string> = {
+  north: "passport.northIndia",
+  "south-deccan": "passport.southDeccan",
+  central: "passport.centralIndia",
+  east: "passport.eastIndia",
+  west: "passport.westIndia",
+};
+
 const HeritagePassport = ({ onClose }: { onClose: () => void }) => {
   const { t } = useTranslation();
   const [, setLocation] = useLocation();
@@ -184,7 +192,7 @@ const HeritagePassport = ({ onClose }: { onClose: () => void }) => {
               <div key={region.id}>
                 <div className="flex items-center justify-between mb-2">
                   <h3 className="text-amber-300 font-semibold text-sm flex items-center gap-2">
-                    <span>{region.emoji}</span> {region.label}
+                    <span>{region.emoji}</span> {t(REGION_LABEL_KEYS[region.id] || region.id)}
                     {progress.complete && <span className="text-yellow-400 text-base">⭐</span>}
                   </h3>
                   <span className="text-amber-500 text-xs">{progress.visited}/{progress.total}</span>
@@ -237,7 +245,7 @@ const HeritagePassport = ({ onClose }: { onClose: () => void }) => {
         {/* Footer */}
         <div className="border-t border-amber-800/40 px-6 py-4 flex items-center justify-between">
           <p className="text-amber-600 text-xs">
-            Visit monuments to collect stamps & unlock regional badges
+            {t("passport.collectHint")}
           </p>
           <button
             onClick={onClose}

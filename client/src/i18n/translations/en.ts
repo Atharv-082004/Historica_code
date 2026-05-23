@@ -112,8 +112,10 @@ const en = {
     stamp: "Stamp",
     northIndia: "North India",
     southDeccan: "South & Deccan",
+    centralIndia: "Central India",
     eastIndia: "East India",
     westIndia: "West India",
+    collectHint: "Visit monuments to collect stamps & unlock regional badges",
   },
   onThisDay: {
     title: "On This Day",
@@ -187,6 +189,21 @@ const en = {
     textOnly: "Text-Only 3D",
     on: "On",
     off: "Off",
+  },
+  compare: {
+    notFound: "Monument not found",
+    returnToMap: "Return to Map",
+    back: "Back",
+    unescoHeritage: "UNESCO Heritage",
+    hideStats: "Hide Stats",
+    showStats: "Show Stats",
+    timelineView: "Timeline Comparison View",
+    originalConstruction: "Original Construction",
+    hundredYearsAgo: "~100 Years Ago",
+    presentDay: "Present Day",
+    rotateHint: "Rotate, zoom, and pan each model to compare architectural changes over time.",
+    viewInVR: "View in VR",
+    viewInAR: "View in AR",
   },
 };
 

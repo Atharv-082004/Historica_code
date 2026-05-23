@@ -112,8 +112,10 @@ const hi = {
     stamp: "मुहर",
     northIndia: "उत्तर भारत",
     southDeccan: "दक्षिण और दक्कन",
+    centralIndia: "मध्य भारत",
     eastIndia: "पूर्व भारत",
     westIndia: "पश्चिम भारत",
+    collectHint: "स्टैम्प इकट्ठा करने और क्षेत्रीय बैज अनलॉक करने के लिए स्मारक देखें",
   },
   onThisDay: {
     title: "आज के दिन",
@@ -187,6 +189,21 @@ const hi = {
     textOnly: "केवल-टेक्स्ट 3D",
     on: "चालू",
     off: "बंद",
+  },
+  compare: {
+    notFound: "स्मारक नहीं मिला",
+    returnToMap: "मानचित्र पर वापस",
+    back: "वापस",
+    unescoHeritage: "यूनेस्को धरोहर",
+    hideStats: "आँकड़े छुपाएं",
+    showStats: "आँकड़े दिखाएं",
+    timelineView: "समयरेखा तुलना दृश्य",
+    originalConstruction: "मूल निर्माण",
+    hundredYearsAgo: "~100 वर्ष पहले",
+    presentDay: "वर्तमान दिन",
+    rotateHint: "वास्तुकला परिवर्तनों की तुलना के लिए प्रत्येक मॉडल को घुमाएं, ज़ूम करें और स्थानांतरित करें।",
+    viewInVR: "VR में देखें",
+    viewInAR: "AR में देखें",
   },
 };
 
