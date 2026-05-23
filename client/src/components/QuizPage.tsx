@@ -86,8 +86,9 @@ const QuizPage = () => {
   const [, setLocation] = useLocation();
   const [mode, setMode] = useState<Mode>("menu");
 
-  const qSource = () => i18n.language === "hi" ? QUESTIONS_HI : QUESTIONS_EN;
-  const getLabel = (type: Question["type"]) => i18n.language === "hi" ? TYPE_LABELS_HI[type] : typeLabel[type];
+  const isHindi = i18n.language === "hi";
+  const qSource = () => isHindi ? QUESTIONS_HI : QUESTIONS_EN;
+  const getLabel = (type: Question["type"]) => isHindi ? TYPE_LABELS_HI[type] : typeLabel[type];
 
   // Classic state
   const [questions, setQuestions] = useState<Question[]>(() => buildQuestions(qSource()));
@@ -107,6 +108,15 @@ const QuizPage = () => {
   const [blitzIsNewRecord, setBlitzIsNewRecord] = useState(false);
   const [blitzScores, setBlitzScores] = useState<number[]>([]);
   const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Rebuild questions whenever language changes
+  useEffect(() => {
+    setQuestions(buildQuestions(qSource()));
+    setIndex(0);
+    setPicked(null);
+    setScore(0);
+    setDone(false);
+  }, [i18n.language]);
 
   const startBlitz = () => {
     const qs = buildQuestions(qSource(), 50);
