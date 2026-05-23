@@ -56,7 +56,7 @@ export const monuments: Monument[] = [
     dynasty: "Mughal Empire",
     dynastyHi: "मुगल साम्राज्य",
     primaryModel: "/models/taj_mahal.glb",
-    historicalModels: { past: "/models/taj_mahal_past.glb", ancient: "/models/taj_mahal_ancient.glb" },
+    historicalModels: { past: "/models/taj_mahal.glb", ancient: "/models/taj_mahal.glb" },
     era: "medieval",
     hotspots: [
       { name: "Main Dome", description: "The 73-metre-tall central onion dome flanked by four chhatris.", position: [0, 1.6, 0] },
@@ -420,7 +420,7 @@ export const monuments: Monument[] = [
     dynasty: "Qutb Shahi Dynasty",
     dynastyHi: "कुतुब शाही वंश",
     primaryModel: "/models/charminar.glb",
-    historicalModels: { past: "/models/charminar.glb", ancient: "/models/charminar_ancient.glb" },
+    historicalModels: { past: "/models/charminar.glb", ancient: "/models/charminar.glb" },
     era: "medieval",
     hotspots: [
       { name: "Four Minarets", description: "Each of the four 56-metre minarets has four storeys with a tiered balcony.", position: [1.2, 1.2, 1.2] },
@@ -754,7 +754,7 @@ export const monuments: Monument[] = [
     dynasty: "Maurya Empire",
     dynastyHi: "मौर्य साम्राज्य",
     primaryModel: "/models/sanchi_stupa.glb",
-    historicalModels: { past: "/models/sanchi_stupa_past.glb", ancient: "/models/sanchi_stupa_ancient.glb" },
+    historicalModels: { past: "/models/sanchi_stupa.glb", ancient: "/models/sanchi_stupa.glb" },
     era: "ancient",
     hotspots: [
       { name: "Great Stupa (Stupa 1)", description: "The hemispherical dome stands 16.5 metres tall with a 120-metre circumference — the spiritual core of the entire Sanchi complex, housing Buddha's relics.", position: [0, 0.5, 0.5] },
@@ -802,7 +802,7 @@ export const monuments: Monument[] = [
     dynasty: "Mughal Empire",
     dynastyHi: "मुगल साम्राज्य",
     primaryModel: "/models/fatehpur_sikri.glb",
-    historicalModels: { past: "/models/fatehpur_sikri.glb", ancient: "/models/fatehpur_sikri_ancient.glb" },
+    historicalModels: { past: "/models/fatehpur_sikri.glb", ancient: "/models/fatehpur_sikri.glb" },
     era: "medieval",
     hotspots: [
       { name: "Buland Darwaza", description: "Built to commemorate Akbar's victory over Gujarat, this 54-metre gateway is the largest in the world — inscribed with verses from the Quran.", position: [0, 1.5, 0.5] },
@@ -994,7 +994,7 @@ export const monuments: Monument[] = [
     dynasty: "Mughal Empire",
     dynastyHi: "मुगल साम्राज्य",
     primaryModel: "/models/humayuns_tomb.glb",
-    historicalModels: { past: "/models/humayuns_tomb_past.glb", ancient: "/models/humayuns_tomb_ancient.glb" },
+    historicalModels: { past: "/models/humayuns_tomb.glb", ancient: "/models/humayuns_tomb.glb" },
     era: "medieval",
     hotspots: [
       { name: "Central Dome", description: "The 42.5-metre double dome of white marble — the first true double dome in India — directly inspired the later dome of the Taj Mahal.", position: [0, 1.5, 0] },
