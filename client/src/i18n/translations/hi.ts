@@ -13,6 +13,7 @@ const hi = {
     searchHint: "स्मारक, तथ्य, प्रश्नोत्तरी खोजें…",
     timeline: "समयरेखा",
     festivals: "उत्सव",
+    eraComparison: "युग तुलना",
   },
   map: {
     title: "भारत के स्मारकों की खोज करें",

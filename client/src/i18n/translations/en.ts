@@ -13,6 +13,7 @@ const en = {
     searchHint: "Search monuments, facts, quiz…",
     timeline: "Timeline",
     festivals: "Festivals",
+    eraComparison: "Era Comparison",
   },
   map: {
     title: "Explore India's Monuments",

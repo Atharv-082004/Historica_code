@@ -7,6 +7,7 @@ import ARView from "./components/ARView";
 import VRView from "./components/VRView";
 import TimeTravel from "./components/TimeTravel";
 import ComparePage from "./components/ComparePage";
+import EraComparison from "./components/EraComparison";
 import QuizPage from "./components/QuizPage";
 import TimelinePage from "./components/TimelinePage";
 import FestivalCalendar from "./components/FestivalCalendar";
@@ -276,6 +277,7 @@ function App() {
               <Route path="/monument/:id/vr" component={VRView} />
               <Route path="/monument/:id/timetravel" component={TimeTravel} />
               <Route path="/compare" component={ComparePage} />
+              <Route path="/era-comparison" component={EraComparison} />
               <Route path="/quiz" component={QuizPage} />
               <Route path="/timeline" component={TimelinePage} />
               <Route path="/festivals" component={FestivalCalendar} />

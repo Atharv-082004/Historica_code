@@ -45,6 +45,7 @@ const Navigation = () => {
     { label: t("nav.timeline"), path: "/timeline", icon: "📜" },
     { label: t("nav.festivals"), path: "/festivals", icon: "🎊" },
     { label: t("nav.compare"), path: "/compare", icon: "⚖️" },
+    { label: t("nav.eraComparison"), path: "/era-comparison", icon: "🏛️" },
     { label: t("nav.quiz"), path: "/quiz", icon: "🧠" },
   ];
 
