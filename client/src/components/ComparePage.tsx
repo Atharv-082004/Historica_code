@@ -218,9 +218,12 @@ const ComparePage = () => {
   const eraB = mB?.era ? (isHindi ? (ERA_LABELS_HI[mB.era] ?? mB.era) : mB.era) : "—";
 
   return (
-    <div className="w-full h-full flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-4">
-      <div className="flex flex-wrap items-end justify-between gap-3 mb-4">
+    <div className="w-full h-full flex flex-col bg-gradient-to-br from-amber-50 via-orange-50 to-amber-100 p-4 pr-[230px]">
+      <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
         <div>
+          <Button variant="outline" size="sm" className="mb-2" onClick={() => setLocation("/")}>
+            ← {t("monument.backToMap")}
+          </Button>
           <h1 className="text-2xl md:text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-amber-700 to-orange-700">
             {t("nav.compare")}
           </h1>
@@ -229,7 +232,6 @@ const ComparePage = () => {
         <div className="flex gap-3 items-end flex-wrap">
           <MonumentPicker label={t("compare.left")} value={a} onChange={setA} exclude={b} isHindi={isHindi} />
           <MonumentPicker label={t("compare.right")} value={b} onChange={setB} exclude={a} isHindi={isHindi} />
-          <Button variant="outline" onClick={() => setLocation("/")}>{t("monument.backToMap")}</Button>
         </div>
       </div>
 
