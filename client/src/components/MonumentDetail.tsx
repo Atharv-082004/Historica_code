@@ -172,6 +172,7 @@ const MonumentDetail = () => {
   const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>("sunset");
   const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null);
   const [showConstructionStory, setShowConstructionStory] = useState(false);
+  const [deityFullscreen, setDeityFullscreen] = useState(false);
   const audio = useAudio();
   const { incrementVisitCount, getVisitCount } = useMonumentStore();
   const { markVisited } = usePassport();
@@ -542,8 +543,16 @@ const MonumentDetail = () => {
                       </div>
                       {deity.modelUrl ? (
                         <div className="px-3 pb-2">
-                          <DeityModelViewer modelUrl={deity.modelUrl} />
-                          <p className="text-xs text-amber-600 text-center mt-1 italic">Drag to rotate · Scroll to zoom</p>
+                          <div className="relative group cursor-pointer" onClick={() => setDeityFullscreen(true)}>
+                            <DeityModelViewer modelUrl={deity.modelUrl} />
+                            <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity bg-black/20 rounded-xl pointer-events-none">
+                              <div className="bg-white/90 backdrop-blur-sm rounded-full px-3 py-1.5 flex items-center gap-1.5 shadow-lg">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-700"><path d="M15 3h6v6"/><path d="M9 21H3v-6"/><path d="M21 3l-7 7"/><path d="M3 21l7-7"/></svg>
+                                <span className="text-xs font-semibold text-amber-800">View Full Screen</span>
+                              </div>
+                            </div>
+                          </div>
+                          <p className="text-xs text-amber-600 text-center mt-1 italic">Drag to rotate · Click to expand</p>
                         </div>
                       ) : (
                         <div className="px-4 pb-3 flex items-center gap-3">
@@ -923,6 +932,40 @@ const MonumentDetail = () => {
           </CardFooter>
         </Card>
       </motion.div>
+
+      {/* Deity Fullscreen Modal */}
+      {deityFullscreen && selectedMonument && DEITY_DATA[selectedMonument.id]?.modelUrl && (() => {
+        const deity = DEITY_DATA[selectedMonument.id];
+        return (
+          <div
+            className="fixed inset-0 z-[200] flex flex-col bg-black/90 backdrop-blur-sm"
+            onClick={() => setDeityFullscreen(false)}
+          >
+            <div className="flex items-center justify-between px-5 py-4" onClick={e => e.stopPropagation()}>
+              <div>
+                <p className="text-[10px] uppercase tracking-widest font-bold text-amber-400">{t("monument.presidingDeity")}</p>
+                <h2 className="text-xl font-bold text-white">{isHindi ? deity.nameHi : deity.name}</h2>
+              </div>
+              <button
+                onClick={() => setDeityFullscreen(false)}
+                className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white"
+                aria-label="Close"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+              </button>
+            </div>
+            <div className="flex-1 px-4 pb-2 min-h-0" onClick={e => e.stopPropagation()}>
+              <DeityModelViewer modelUrl={deity.modelUrl!} height="h-full" autoRotateSpeed={1.2} />
+            </div>
+            <div className="px-5 py-4" onClick={e => e.stopPropagation()}>
+              <p className="text-sm text-amber-100/80 leading-relaxed">
+                {isHindi ? deity.descriptionHi : deity.description}
+              </p>
+              <p className="text-xs text-white/40 text-center mt-3">Drag to rotate · Scroll to zoom · Tap outside to close</p>
+            </div>
+          </div>
+        );
+      })()}
 
       {/* Construction Story Modal */}
       {showConstructionStory && selectedMonument && (

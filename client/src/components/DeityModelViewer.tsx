@@ -1,4 +1,4 @@
-import { Suspense, useRef } from "react";
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -26,9 +26,19 @@ function DeityModel({ url }: { url: string }) {
   );
 }
 
-export default function DeityModelViewer({ modelUrl }: { modelUrl: string }) {
+interface DeityModelViewerProps {
+  modelUrl: string;
+  height?: string;
+  autoRotateSpeed?: number;
+}
+
+export default function DeityModelViewer({
+  modelUrl,
+  height = "h-44",
+  autoRotateSpeed = 1.8,
+}: DeityModelViewerProps) {
   return (
-    <div className="w-full h-44 rounded-xl overflow-hidden bg-gradient-to-b from-amber-100 to-orange-50 border border-amber-200">
+    <div className={`w-full ${height} rounded-xl overflow-hidden bg-gradient-to-b from-amber-100 to-orange-50 border border-amber-200`}>
       <Canvas
         camera={{ position: [0, 0.5, 4], fov: 40 }}
         gl={{ antialias: true, alpha: true }}
@@ -49,9 +59,9 @@ export default function DeityModelViewer({ modelUrl }: { modelUrl: string }) {
         <OrbitControls
           enablePan={false}
           autoRotate
-          autoRotateSpeed={1.8}
-          minDistance={2}
-          maxDistance={8}
+          autoRotateSpeed={autoRotateSpeed}
+          minDistance={1.5}
+          maxDistance={10}
           enableDamping
         />
       </Canvas>
