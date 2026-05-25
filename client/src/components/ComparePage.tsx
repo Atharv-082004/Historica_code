@@ -59,7 +59,7 @@ const MonumentPicker = ({
     <select
       value={value}
       onChange={e => onChange(e.target.value)}
-      className="bg-white border border-amber-200 rounded-md px-3 py-2 text-sm text-orange-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
+      className="w-52 bg-white border border-amber-200 rounded-md px-3 py-2 text-sm text-orange-900 focus:outline-none focus:ring-2 focus:ring-amber-400"
     >
       {monuments.filter(m => m.id !== exclude).map(m => (
         <option key={m.id} value={m.id}>
