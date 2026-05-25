@@ -19,6 +19,7 @@ import { useAudioTour } from "../hooks/useAudioTour";
 import { usePassport } from "../lib/stores/usePassport";
 import { useTranslation } from "react-i18next";
 import { DEITY_DATA } from "../data/deityData";
+import DeityModelViewer from "./DeityModelViewer";
 import NearbyMonuments from "./NearbyMonuments";
 import ConstructionStory from "./ConstructionStory";
 
@@ -531,33 +532,45 @@ const MonumentDetail = () => {
                   const deity = DEITY_DATA[selectedMonument.id];
                   return (
                     <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 rounded-xl border border-amber-300 shadow-md overflow-hidden">
-                      <div className="flex items-stretch">
-                        <div className="w-24 flex-shrink-0 bg-amber-100 flex items-center justify-center overflow-hidden">
-                          <img
-                            src={deity.imageUrl}
-                            alt={deity.name}
-                            className="w-full h-full object-cover"
-                            onError={e => {
-                              (e.currentTarget as HTMLImageElement).style.display = "none";
-                              const parent = e.currentTarget.parentElement;
-                              if (parent) {
-                                parent.innerHTML = '<span class="text-4xl select-none">🙏</span>';
-                              }
-                            }}
-                          />
+                      <div className="px-4 pt-3 pb-1">
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-amber-600">
+                          {t("monument.presidingDeity")}
+                        </span>
+                        <h4 className="text-base font-bold text-amber-900 leading-snug mt-0.5">
+                          {isHindi ? deity.nameHi : deity.name}
+                        </h4>
+                      </div>
+                      {deity.modelUrl ? (
+                        <div className="px-3 pb-2">
+                          <DeityModelViewer modelUrl={deity.modelUrl} />
+                          <p className="text-xs text-amber-600 text-center mt-1 italic">Drag to rotate · Scroll to zoom</p>
                         </div>
-                        <div className="flex-1 p-4 min-w-0">
-                          <span className="text-[10px] font-bold uppercase tracking-widest text-amber-600 block mb-1">
-                            {t("monument.presidingDeity")}
-                          </span>
-                          <h4 className="text-base font-bold text-amber-900 leading-snug mb-2">
-                            {isHindi ? deity.nameHi : deity.name}
-                          </h4>
+                      ) : (
+                        <div className="px-4 pb-3 flex items-center gap-3">
+                          <div className="w-16 h-16 flex-shrink-0 bg-amber-100 rounded-lg flex items-center justify-center overflow-hidden">
+                            <img
+                              src={deity.imageUrl}
+                              alt={deity.name}
+                              className="w-full h-full object-cover"
+                              onError={e => {
+                                (e.currentTarget as HTMLImageElement).style.display = "none";
+                                const parent = e.currentTarget.parentElement;
+                                if (parent) parent.innerHTML = '<span class="text-3xl select-none">🙏</span>';
+                              }}
+                            />
+                          </div>
+                          <p className="text-sm text-orange-800 leading-relaxed flex-1">
+                            {isHindi ? deity.descriptionHi : deity.description}
+                          </p>
+                        </div>
+                      )}
+                      {deity.modelUrl && (
+                        <div className="px-4 pb-3">
                           <p className="text-sm text-orange-800 leading-relaxed">
                             {isHindi ? deity.descriptionHi : deity.description}
                           </p>
                         </div>
-                      </div>
+                      )}
                     </div>
                   );
                 })()}
