@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useMemo, Suspense } from "react";
 import { useRoute, useLocation } from "wouter";
 import { monuments } from "../data/monuments";
 import { motion } from "framer-motion";
@@ -20,6 +20,8 @@ import { usePassport } from "../lib/stores/usePassport";
 import { useTranslation } from "react-i18next";
 import NearbyMonuments from "./NearbyMonuments";
 import ConstructionStory from "./ConstructionStory";
+import { TEMPLE_DEITIES } from "../data/deityData";
+import type { Deity } from "../data/deityData";
 
 type TimeOfDay = "day" | "sunset" | "night";
 
@@ -159,6 +161,41 @@ const MonumentDisplay = ({
   );
 };
 
+function DeityModelInner({ path }: { path: string }) {
+  const { scene } = useGLTF(path);
+  const cloned = useMemo(() => scene.clone(true), [scene]);
+  return (
+    <>
+      <primitive object={cloned} />
+      <AutoFitCamera margin={2.5} />
+    </>
+  );
+}
+
+function DeityModelViewer({ deity }: { deity: Deity }) {
+  return (
+    <div className="relative w-full h-56 rounded-xl overflow-hidden border border-amber-200 shadow-lg bg-gradient-to-br from-amber-900/20 to-orange-900/20">
+      <Canvas camera={{ position: [0, 1, 4], fov: 45 }}>
+        <ambientLight intensity={0.9} />
+        <directionalLight position={[5, 10, 5]} intensity={1.6} />
+        <directionalLight position={[-3, 5, -3]} intensity={0.5} color="#ffd6a0" />
+        <Suspense fallback={
+          <Html center>
+            <div className="flex flex-col items-center gap-2">
+              <div className="w-8 h-8 border-3 border-amber-400 border-t-transparent rounded-full animate-spin" />
+              <div className="text-amber-200 text-xs bg-black/50 px-3 py-1 rounded-lg">Loading…</div>
+            </div>
+          </Html>
+        }>
+          <DeityModelInner path={deity.modelPath} />
+        </Suspense>
+        <OrbitControls enablePan={false} autoRotate autoRotateSpeed={1.5} minDistance={2} maxDistance={8} />
+        <Environment preset="sunset" />
+      </Canvas>
+    </div>
+  );
+}
+
 const MonumentDetail = () => {
   const { t, i18n } = useTranslation();
   const isHindi = i18n.language === "hi";
@@ -170,9 +207,12 @@ const MonumentDetail = () => {
   const [timeOfDay, setTimeOfDay] = useState<TimeOfDay>("sunset");
   const [activeHotspot, setActiveHotspot] = useState<Hotspot | null>(null);
   const [showConstructionStory, setShowConstructionStory] = useState(false);
+  const [selectedDeityIndex, setSelectedDeityIndex] = useState(0);
   const audio = useAudio();
   const { incrementVisitCount, getVisitCount } = useMonumentStore();
   const { markVisited } = usePassport();
+
+  const deityInfo = selectedMonument ? TEMPLE_DEITIES[selectedMonument.id] : undefined;
 
   useEffect(() => {
     if (!match) return;
@@ -486,7 +526,7 @@ const MonumentDetail = () => {
           
           <CardContent>
             <Tabs value={activeTab} onValueChange={setActiveTab}>
-              <TabsList className="grid grid-cols-3 mb-4 p-1 bg-gradient-to-r from-amber-100/50 via-orange-100/50 to-red-100/50 rounded-lg">
+              <TabsList className={`grid ${deityInfo ? "grid-cols-4" : "grid-cols-3"} mb-4 p-1 bg-gradient-to-r from-amber-100/50 via-orange-100/50 to-red-100/50 rounded-lg`}>
                 <TabsTrigger 
                   value="overview"
                   className="data-[state=active]:bg-gradient-to-br data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300"
@@ -519,6 +559,17 @@ const MonumentDetail = () => {
                   </svg>
                   {t("monument.visitInfo")}
                 </TabsTrigger>
+                {deityInfo && (
+                  <TabsTrigger
+                    value="deities"
+                    className="data-[state=active]:bg-gradient-to-br data-[state=active]:from-amber-500 data-[state=active]:to-orange-600 data-[state=active]:text-white data-[state=active]:shadow-md transition-all duration-300"
+                  >
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="mr-1">
+                      <path d="M12 2L9.5 8.5H3l5.5 4-2 6.5L12 15l5.5 4-2-6.5L21 8.5h-6.5L12 2z"/>
+                    </svg>
+                    {t("monument.deities")}
+                  </TabsTrigger>
+                )}
               </TabsList>
               
               <TabsContent value="overview" className="space-y-6">
@@ -782,6 +833,87 @@ const MonumentDetail = () => {
 
                 <NearbyMonuments current={selectedMonument} />
               </TabsContent>
+
+              {deityInfo && (
+                <TabsContent value="deities" className="space-y-5">
+                  <div className="bg-gradient-to-br from-amber-50 to-orange-50 border border-amber-200 rounded-xl p-4 shadow-sm">
+                    <div className="flex items-center gap-3 mb-1">
+                      <div className="w-9 h-9 rounded-full bg-gradient-to-br from-amber-400 to-orange-500 flex items-center justify-center shadow-md flex-shrink-0">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M12 2L9.5 8.5H3l5.5 4-2 6.5L12 15l5.5 4-2-6.5L21 8.5h-6.5L12 2z"/>
+                        </svg>
+                      </div>
+                      <div>
+                        <h3 className="font-bold text-amber-900 text-lg leading-tight">{t("monument.deitiesTabTitle")}</h3>
+                        <p className="text-amber-700 text-xs">{t("monument.deitiesTabSubtitle")}</p>
+                      </div>
+                    </div>
+                    {deityInfo.templeNote && (
+                      <p className="text-orange-800 text-sm mt-3 bg-white/60 rounded-lg p-3 border border-amber-100">
+                        {isHindi && deityInfo.templeNoteHi ? deityInfo.templeNoteHi : deityInfo.templeNote}
+                      </p>
+                    )}
+                  </div>
+
+                  {deityInfo.deities.length > 1 && (
+                    <div className="flex gap-2 flex-wrap">
+                      {deityInfo.deities.map((deity, idx) => (
+                        <button
+                          key={idx}
+                          onClick={() => setSelectedDeityIndex(idx)}
+                          className={`px-4 py-1.5 rounded-full text-sm font-medium border transition-all duration-200 ${
+                            selectedDeityIndex === idx
+                              ? "bg-gradient-to-r from-amber-500 to-orange-600 text-white border-transparent shadow-md"
+                              : "bg-white/70 text-amber-800 border-amber-200 hover:border-amber-400"
+                          }`}
+                        >
+                          {isHindi ? deity.nameHi : deity.name}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+
+                  {(() => {
+                    const deity = deityInfo.deities[selectedDeityIndex] ?? deityInfo.deities[0];
+                    return (
+                      <div className="space-y-4">
+                        <div className="flex items-start gap-4">
+                          <div className="flex-1 min-w-0">
+                            <h2 className="text-2xl font-bold text-amber-900 leading-tight">
+                              {isHindi ? deity.nameHi : deity.name}
+                            </h2>
+                            <div className="flex items-center gap-2 mt-1">
+                              <div className={`h-1.5 w-12 rounded-full bg-gradient-to-r ${deity.color}`} />
+                              <span className="text-amber-700 text-sm font-medium">
+                                {isHindi ? deity.aspectHi : deity.aspect}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+
+                        <DeityModelViewer deity={deity} />
+
+                        <div className="bg-white/70 backdrop-blur-sm border border-amber-100 rounded-xl p-4 shadow-sm">
+                          <div className="flex items-center gap-2 mb-2">
+                            <div className={`w-2 h-2 rounded-full bg-gradient-to-br ${deity.color}`} />
+                            <span className="text-xs font-semibold text-amber-600 uppercase tracking-wide">{t("monument.deitiesAspect")}</span>
+                          </div>
+                          <p className="text-orange-900 leading-relaxed text-sm">
+                            {isHindi ? deity.descriptionHi : deity.description}
+                          </p>
+                        </div>
+
+                        <div className="flex items-center gap-2 bg-gradient-to-r from-amber-100/60 to-orange-100/60 border border-amber-200 rounded-lg px-4 py-3">
+                          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-600 flex-shrink-0">
+                            <circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>
+                          </svg>
+                          <p className="text-amber-800 text-xs">{isHindi ? "3D मॉडल को घुमाने के लिए माउस या टच का उपयोग करें" : "Drag to rotate · Scroll to zoom the 3D deity model"}</p>
+                        </div>
+                      </div>
+                    );
+                  })()}
+                </TabsContent>
+              )}
             </Tabs>
           </CardContent>
           
