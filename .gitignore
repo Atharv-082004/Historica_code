@@ -1,6 +1,12 @@
-.vercel/
 node_modules/
 dist/
+.vercel/
+.DS_Store
+coverage/
 *.tsbuildinfo
 
+.env
+.env.local
+.env.production
+.env.development
 .env*
