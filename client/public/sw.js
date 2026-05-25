@@ -1,4 +1,4 @@
-const CACHE_VERSION = "historica-v2";
+const CACHE_VERSION = "historica-v3";
 const SHELL_CACHE = `${CACHE_VERSION}-shell`;
 const MODEL_CACHE = `${CACHE_VERSION}-models`;
 const ASSET_CACHE = `${CACHE_VERSION}-assets`;
