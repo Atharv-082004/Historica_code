@@ -63,6 +63,7 @@ export default function DeityModelViewer({
           minDistance={1.5}
           maxDistance={10}
           enableDamping
+          zoomToCursor
         />
       </Canvas>
     </div>
