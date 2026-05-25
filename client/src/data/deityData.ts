@@ -51,15 +51,15 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
     modelUrl: "/models/deities/meenakshi.glb",
   },
   "khajuraho-temples": {
-    name: "Shiva — Lord of the Cosmos",
-    nameHi: "शिव — ब्रह्मांड के स्वामी",
+    name: "Vishnu — The Preserver (Lakshmana Temple)",
+    nameHi: "विष्णु — पालनहार (लक्ष्मण मंदिर)",
     description:
-      "The Western Group temples at Khajuraho are primarily dedicated to Shiva and Vishnu. Kandariya Mahadev, the largest temple, enshrines a magnificent Shiva lingam. The erotic sculptures that surround the outer walls represent the spectrum of human life — including worldly pleasures — before one enters the divine sanctum.",
+      "The Lakshmana Temple at Khajuraho is dedicated to Vaikunta Vishnu — a three-headed form showing Vishnu flanked by Varaha (boar) and Narasimha (lion). Khajuraho's Western Group temples serve both Shiva (Kandariya Mahadeva) and Vishnu (Lakshmana, Chaturbhuja). The Chaturbhuja Temple enshrines a 2.7 m standing Vishnu widely regarded as the finest Vishnu sculpture in India.",
     descriptionHi:
-      "खजुराहो के पश्चिमी समूह के मंदिर मुख्यतः शिव और विष्णु को समर्पित हैं। सबसे बड़ा मंदिर कंदारिया महादेव में एक भव्य शिव लिंग है। बाहरी दीवारों पर कामुक मूर्तियाँ मानव जीवन के विभिन्न पहलुओं को दर्शाती हैं।",
+      "खजुराहो का लक्ष्मण मंदिर वैकुंठ विष्णु को समर्पित है — एक त्रिमुखी रूप जिसमें विष्णु को वराह और नरसिंह के साथ दर्शाया गया है। चतुर्भुज मंदिर में 2.7 मीटर की खड़ी विष्णु प्रतिमा है, जिसे भारत में विष्णु की सबसे उत्कृष्ट मूर्ति माना जाता है।",
     imageUrl:
-      "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_lingam.glb",
+      "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Visnumurti.JPG/300px-Visnumurti.JPG",
+    modelUrl: "/models/deities/vishnu.glb",
   },
   "mahabalipuram": {
     name: "Shiva — Somaskanda",
@@ -257,6 +257,6 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
       "सोमनाथ 12 ज्योतिर्लिंगों में से एक है — शिव की सर्वोच्च उपस्थिति को चिह्नित करने वाले दिव्य प्रकाश के स्वयंभू स्तंभ। यह मंदिर 17 बार नष्ट और पुनर्निर्मित हुआ है।",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_nataraja.glb",
+    modelUrl: "/models/deities/shiva_lingam.glb",
   },
 };
