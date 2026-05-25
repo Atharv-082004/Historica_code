@@ -18,6 +18,7 @@ import { WeatherEffects, getMonumentWeather } from "./WeatherEffects";
 import { useAudioTour } from "../hooks/useAudioTour";
 import { usePassport } from "../lib/stores/usePassport";
 import { useTranslation } from "react-i18next";
+import { DEITY_DATA } from "../data/deityData";
 import NearbyMonuments from "./NearbyMonuments";
 import ConstructionStory from "./ConstructionStory";
 
@@ -525,7 +526,42 @@ const MonumentDetail = () => {
                 <div className="bg-white/70 backdrop-blur-sm border border-amber-100 rounded-xl p-4 shadow-sm">
                   <p className="text-orange-900 leading-relaxed">{displayDescription}</p>
                 </div>
-                
+
+                {DEITY_DATA[selectedMonument.id] && (() => {
+                  const deity = DEITY_DATA[selectedMonument.id];
+                  return (
+                    <div className="bg-gradient-to-br from-orange-50 via-amber-50 to-yellow-50 rounded-xl border border-amber-300 shadow-md overflow-hidden">
+                      <div className="flex items-stretch">
+                        <div className="w-24 flex-shrink-0 bg-amber-100 flex items-center justify-center overflow-hidden">
+                          <img
+                            src={deity.imageUrl}
+                            alt={deity.name}
+                            className="w-full h-full object-cover"
+                            onError={e => {
+                              (e.currentTarget as HTMLImageElement).style.display = "none";
+                              const parent = e.currentTarget.parentElement;
+                              if (parent) {
+                                parent.innerHTML = '<span class="text-4xl select-none">🙏</span>';
+                              }
+                            }}
+                          />
+                        </div>
+                        <div className="flex-1 p-4 min-w-0">
+                          <span className="text-[10px] font-bold uppercase tracking-widest text-amber-600 block mb-1">
+                            {t("monument.presidingDeity")}
+                          </span>
+                          <h4 className="text-base font-bold text-amber-900 leading-snug mb-2">
+                            {isHindi ? deity.nameHi : deity.name}
+                          </h4>
+                          <p className="text-sm text-orange-800 leading-relaxed">
+                            {isHindi ? deity.descriptionHi : deity.description}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  );
+                })()}
+
                 <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-5 rounded-xl border border-amber-200 shadow-md">
                   <div className="flex items-center mb-4">
                     <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center mr-3 shadow-inner">

@@ -38,6 +38,7 @@ const en = {
     history: "History",
     visitInfo: "Visit Info",
     quickFacts: "Quick Facts",
+    presidingDeity: "Presiding Deity",
     exploreHistory: "Explore the history tab to discover this monument's heritage!",
     builtDuring: "Built During",
     visitingHours: "Visiting Hours",

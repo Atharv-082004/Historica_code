@@ -38,6 +38,7 @@ const hi = {
     history: "इतिहास",
     visitInfo: "यात्रा जानकारी",
     quickFacts: "त्वरित तथ्य",
+    presidingDeity: "मुख्य देवता",
     exploreHistory: "इस स्मारक की विरासत जानने के लिए इतिहास टैब देखें!",
     builtDuring: "निर्माण काल",
     visitingHours: "दर्शन समय",
