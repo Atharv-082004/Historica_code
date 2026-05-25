@@ -184,6 +184,7 @@ const MonumentDetail = () => {
       setSelectedMonument(monument);
       incrementVisitCount(monument.id);
       markVisited(monument.id);
+      useGLTF.preload(monument.primaryModel);
     } else {
       setLocation("/");
     }

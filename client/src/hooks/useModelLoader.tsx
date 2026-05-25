@@ -3,9 +3,6 @@ import { useGLTF } from "@react-three/drei";
 import { toast } from "sonner";
 import * as THREE from "three";
 
-// Preload fallback model to avoid errors
-useGLTF.preload("/models/taj_mahal.glb");
-
 /**
  * Custom hook to load 3D models with error handling and fallback
  */

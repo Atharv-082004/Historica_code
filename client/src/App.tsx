@@ -13,18 +13,12 @@ import FestivalCalendar from "./components/FestivalCalendar";
 import Navigation from "./components/Navigation";
 import WelcomePage from "./components/WelcomePage";
 import { AppProvider } from "./context/AppContext";
-import { KeyboardControls, useGLTF } from "@react-three/drei";
+import { KeyboardControls } from "@react-three/drei";
 import { useAudio } from "./lib/stores/useAudio";
 import { useAccessibility } from "./lib/stores/useAccessibility";
 import "@fontsource/inter";
 import { Toaster } from "sonner";
 import { Progress } from "./components/ui/progress";
-import { monuments } from "./data/monuments";
-
-// Kick off background preloading of all primary monument models immediately
-monuments.forEach(m => {
-  useGLTF.preload(m.primaryModel);
-});
 
 // Define control keys for navigation
 const controls = [
