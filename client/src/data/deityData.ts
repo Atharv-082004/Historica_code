@@ -59,7 +59,7 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
       "खजुराहो के पश्चिमी समूह के मंदिर मुख्यतः शिव और विष्णु को समर्पित हैं। सबसे बड़ा मंदिर कंदारिया महादेव में एक भव्य शिव लिंग है। बाहरी दीवारों पर कामुक मूर्तियाँ मानव जीवन के विभिन्न पहलुओं को दर्शाती हैं।",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_nataraja.glb",
+    modelUrl: "/models/deities/shiva_lingam.glb",
   },
   "mahabalipuram": {
     name: "Shiva — Somaskanda",
@@ -81,7 +81,7 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
       "बृहदेश्वर मंदिर में भारत के सबसे बड़े शिव लिंगों में से एक है, जो लगभग 4 मीटर ऊँचा है। 'पेरुवुडैयार' — 'महान' — के नाम से जाना जाने वाला यह लिंग 80 किलो से अधिक वजन के सोने के मुकुट से सजाया गया है।",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_nataraja.glb",
+    modelUrl: "/models/deities/shiva_lingam.glb",
   },
   "mahabodhi-temple": {
     name: "Gautama Buddha — The Enlightened One",
@@ -103,7 +103,7 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
       "कैलाश मंदिर शिव को कैलाश पर्वत के शासक के रूप में समर्पित है। एकल बेसाल्ट चट्टान से ऊपर से नीचे तक तराशा गया पूरा मंदिर कैलाश पर्वत का प्रतिनिधित्व करता है।",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_nataraja.glb",
+    modelUrl: "/models/deities/shiva_lingam.glb",
   },
   "ranakpur-temple": {
     name: "Adinath — The First Tirthankara",
@@ -136,7 +136,7 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
       "रामप्पा मंदिर में भगवान शिव को रामलिंगेश्वर के रूप में स्थापित किया गया है, जिसका नाम मूर्तिकार रामप्पा के नाम पर रखा गया। माना जाता है कि मुख्य लिंग परिसर को घेरने वाली रामप्पा झील के केंद्र में स्वयंभू प्रकट हुआ था।",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_nataraja.glb",
+    modelUrl: "/models/deities/shiva_lingam.glb",
   },
   "hoysaleswara-temple": {
     name: "Hoysaleswara & Shanthaleswara — Twin Shivas",
@@ -147,7 +147,7 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
       "मंदिर में दो परस्पर जुड़े हुए गर्भगृह हैं — होयसलेश्वर और शांतलेश्वर। प्रत्येक गर्भगृह में एक बड़ा नंदी (पवित्र बैल) अंदर के शिव लिंग की ओर मुख किए हुए है।",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_nataraja.glb",
+    modelUrl: "/models/deities/shiva_lingam.glb",
   },
   "badami-caves": {
     name: "Vishnu & Shiva — Chalukyan Deities",
@@ -191,7 +191,7 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
       "माना जाता है कि भगवान राम ने रावण के वध के बाद प्रायश्चित के लिए इसी स्थान पर एक शिव लिंग की पूजा की थी। मंदिर में दो लिंग हैं — सीता द्वारा बनाया गया रेत का लिंग और हनुमान द्वारा कैलाश से लाया गया पत्थर का लिंग।",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_nataraja.glb",
+    modelUrl: "/models/deities/shiva_lingam.glb",
   },
   "orchha-fort": {
     name: "Ram Raja — The King-God of Orchha",
@@ -213,7 +213,7 @@ export const DEITY_DATA: Record<string, DeityInfo> = {
       "लिंगराज मंदिर में शिव के एक अनूठे स्वयंभू लिंग को स्थापित किया गया है। असामान्य रूप से, उनकी हरिहर के रूप में पूजा की जाती है — एक ही रूप में शिव और विष्णु का मिलन।",
     imageUrl:
       "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg/240px-Shiva_Nataraja_Mus%C3%A9e_Guimet_25971.jpg",
-    modelUrl: "/models/deities/shiva_nataraja.glb",
+    modelUrl: "/models/deities/shiva_lingam.glb",
   },
   "jagannath-temple": {
     name: "Jagannath — Lord of the Universe",
