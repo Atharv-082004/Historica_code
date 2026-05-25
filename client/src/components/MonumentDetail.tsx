@@ -213,6 +213,7 @@ const MonumentDetail = () => {
   const { markVisited } = usePassport();
 
   const deityInfo = selectedMonument ? TEMPLE_DEITIES[selectedMonument.id] : undefined;
+  if (selectedMonument) console.log("[Deities] monument:", selectedMonument.id, "| found:", !!deityInfo);
 
   useEffect(() => {
     if (!match) return;
@@ -577,6 +578,24 @@ const MonumentDetail = () => {
                   <p className="text-orange-900 leading-relaxed">{displayDescription}</p>
                 </div>
                 
+                {deityInfo && (
+                  <button
+                    onClick={() => setActiveTab("deities")}
+                    className="w-full flex items-center gap-4 px-5 py-4 bg-gradient-to-r from-orange-600 to-amber-500 hover:from-orange-500 hover:to-amber-400 text-white rounded-xl shadow-lg transition-all group border border-amber-400/30"
+                  >
+                    <div className="w-11 h-11 rounded-xl bg-white/20 flex items-center justify-center text-2xl flex-shrink-0 group-hover:scale-110 transition-transform">✨</div>
+                    <div className="text-left flex-1">
+                      <p className="font-bold text-base">{isHindi ? "पवित्र देवता" : "Sacred Deities"}</p>
+                      <p className="text-amber-100 text-xs mt-0.5">
+                        {isHindi
+                          ? `${deityInfo.deities.map(d => d.nameHi).join(" • ")} — 3D दर्शन करें`
+                          : `${deityInfo.deities.map(d => d.name).join(" • ")} — explore in 3D`}
+                      </p>
+                    </div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-200 flex-shrink-0 group-hover:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6"/></svg>
+                  </button>
+                )}
+
                 <div className="bg-gradient-to-br from-amber-50 to-orange-50 p-5 rounded-xl border border-amber-200 shadow-md">
                   <div className="flex items-center mb-4">
                     <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center mr-3 shadow-inner">
